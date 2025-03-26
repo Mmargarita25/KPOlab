@@ -1,6 +1,8 @@
 import customtkinter as ctk
 from random import choice
 
+# v1.0.0
+
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
@@ -32,7 +34,7 @@ class Calculator(ctk.CTk):
 
         # Цвета для операторов
         operator_color = "#808080"  # Серый
-        equals_color = "#32CD32"  # Зеленый (для кнопки =)
+        equals_color = "#32CD32"
 
         for row in buttons:
             frame = ctk.CTkFrame(self)
@@ -78,7 +80,7 @@ class Calculator(ctk.CTk):
                 self.expression = str(result)
             except Exception:
                 self.entry.delete(0, ctk.END)
-                self.entry.insert(0, "Ошибка")
+                self.entry.insert(0, "Ошибка!!!")
                 self.expression = ""
         else:
             self.expression += str(char)
