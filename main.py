@@ -9,7 +9,7 @@ class Calculator(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Крутой калькулятор")
-        self.geometry("300x450")
+        self.geometry("350x550")
         self.resizable(False, False)
 
         # Список для хранения истории вычислений
@@ -62,6 +62,12 @@ class Calculator(ctk.CTk):
                                    fg_color="#4B0082", hover_color="#800080",
                                    command=self.generate_random)
         random_btn.pack(pady=5)
+        
+        # Кнопка удаления истории (добавлена)
+        clear_history_btn = ctk.CTkButton(self, text="Удалить историю", width=280, height=30,
+                                         fg_color="#FF4500", hover_color="#FF6347",
+                                         command=self.clear_history)
+        clear_history_btn.pack(pady=5)
 
     def button_click(self, char):
         if char == "=":
@@ -98,6 +104,11 @@ class Calculator(ctk.CTk):
     def update_history(self):
         history_text = " | ".join(self.history[-3:])
         self.history_label.configure(text=history_text)
+        
+    # метод для очистки истории
+    def clear_history(self):
+        self.history = []
+        self.history_label.configure(text="")
 
 
 if __name__ == "__main__":
