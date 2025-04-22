@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from abc import ABC, abstractmethod
-
+#
 class Button(ABC):
     """Абстрактный класс для всех кнопок калькулятора"""
     def __init__(self, calculator, char):
