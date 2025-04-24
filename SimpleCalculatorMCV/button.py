@@ -1,10 +1,9 @@
 import customtkinter as ctk
 from abc import ABC, abstractmethod
-#
+
 class Button(ABC):
-    """Абстрактный класс для всех кнопок калькулятора"""
-    def __init__(self, calculator, char):
-        self.calculator = calculator
+    def __init__(self, controller, char):
+        self.controller = controller
         self.char = char
     
     @abstractmethod
@@ -28,11 +27,7 @@ class DigitButton(Button):
         )
     
     def on_click(self):
-        if self.calculator.expression == "0":
-            self.calculator.expression = self.char
-        else:
-            self.calculator.expression += self.char
-        self.calculator.update_display()
+        self.controller.append_to_expression(self.char)
 
 class OperationButton(Button):
     """Кнопка операции (+, -, *, /)"""
@@ -49,9 +44,7 @@ class OperationButton(Button):
         )
     
     def on_click(self):
-        if self.calculator.expression and self.calculator.expression[-1] not in '/*-+':
-            self.calculator.expression += self.char
-            self.calculator.update_display()
+        self.controller.append_to_expression(self.char)
 
 class EqualsButton(Button):
     """Кнопка равно (=)"""
@@ -68,19 +61,7 @@ class EqualsButton(Button):
         )
     
     def on_click(self):
-        try:
-            result = eval(self.calculator.expression)
-            self.calculator.history.append(f"{self.calculator.expression} = {result}")
-            if len(self.calculator.history) > 3:
-                self.calculator.history.pop(0)
-            self.calculator.update_history()
-            
-            self.calculator.expression = str(result)
-            self.calculator.update_display()
-        except Exception:
-            self.calculator.expression = ""
-            self.calculator.entry.delete(0, ctk.END)
-            self.calculator.entry.insert(0, "Ошибка")
+        self.controller.evaluate_expression()
 
 class ClearButton(Button):
     """Кнопка очистки (C)"""
@@ -97,8 +78,7 @@ class ClearButton(Button):
         )
     
     def on_click(self):
-        self.calculator.expression = ""
-        self.calculator.update_display()
+        self.controller.clear_expression()
 
 class ClearHistoryButton(Button):
     """Кнопка очистки истории"""
@@ -114,8 +94,7 @@ class ClearHistoryButton(Button):
         )
     
     def on_click(self):
-        self.calculator.history = []
-        self.calculator.update_history()
+        self.controller.clear_history()
 
 class RandomNumberButton(Button):
     """Кнопка генерации случайного числа"""
@@ -133,5 +112,4 @@ class RandomNumberButton(Button):
     def on_click(self):
         from random import choice
         random_num = choice(range(1, 1001))
-        self.calculator.expression = str(random_num)
-        self.calculator.update_display()
+        self.controller.set_expression(str(random_num))

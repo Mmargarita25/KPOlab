@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from button import *
+from Fabrik.button import *
 
 class Calculator(ctk.CTk):
     def __init__(self):
@@ -8,14 +8,12 @@ class Calculator(ctk.CTk):
         self.geometry("350x550")
         self.resizable(False, False)
         
-        # Установка темного режима
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
         
         self.history = []
         self.expression = ""
-        
-        # Создаем UI элементы
+
         self.create_widgets()
         self.create_buttons()
     
@@ -37,7 +35,6 @@ class Calculator(ctk.CTk):
             ('0', '.', '=', '+')
         ]
         
-        # Создаем кнопки цифр и операций
         for row in button_layout:
             frame = ctk.CTkFrame(self)
             frame.pack(pady=2)
@@ -52,7 +49,6 @@ class Calculator(ctk.CTk):
                 btn = button.create_button(frame)
                 btn.pack(side="left", padx=5)
         
-        # Создаем специальные кнопки
         ClearButton(self, "Очистить").create_button(self).pack(pady=10)
         RandomNumberButton(self, "Случайное число").create_button(self).pack(pady=5)
         ClearHistoryButton(self, "Удалить историю").create_button(self).pack(pady=5)
