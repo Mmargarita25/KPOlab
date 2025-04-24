@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from abc import ABC, abstractmethod
 from commands import *
-
+# from calculator import Calculator
 class Button(ABC):
     """Абстрактный класс кнопки"""
     def __init__(self, calculator, char):
